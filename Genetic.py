@@ -112,7 +112,7 @@ class Genetic:
     return str(sol[0]), state
 
 
-test_seq = 3
+test_seq = 2
 test_num = 3
 def write_result(seq: int, value: str, state: str):
   with open(f"./Output/OUTPUT_{seq}.txt", 'w') as f:

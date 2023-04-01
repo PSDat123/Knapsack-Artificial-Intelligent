@@ -44,14 +44,15 @@ class BranchAndBound:
         # sort items in decreasing order of their value-to-weight ratios
         sorted_items = sorted([(i, self.v[i]/self.w[i])
                               for i in range(k, self.n)], key=lambda x: -x[1])
+        # print(sorted_items)
         for i, _ in sorted_items:
             if weight + self.w[i] <= self.W:
                 taken[i] = True
                 self.knapsack(i + 1, weight +
                               self.w[i], value + self.v[i], taken)
-                taken[i] = False
-
-            if self.bound(i + 1, weight, value, taken) > self.best_value:
+                taken[i] = False 
+            
+            if self.bound(i + 1, weight, value, taken[:]) > self.best_value:
                 taken[i] = False
                 self.knapsack(i + 1, weight, value, taken)
 
@@ -61,8 +62,7 @@ class BranchAndBound:
         return str(self.best_value), ', '.join([str(int(i)) for i in self.best_items])
 
 
-test_seq = 3
-
+test_seq = 4
 
 def write_result(seq: int, value: str, state: str):
     with open(f"./Output/OUTPUT_{seq}.txt", 'w') as f:
