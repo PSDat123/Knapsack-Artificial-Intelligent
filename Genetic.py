@@ -1,5 +1,4 @@
 import random
-import matplotlib.pyplot as plt
 class Genetic:
   POPULATION_SIZE = 200
   MUTATION_PROB = 0.1
@@ -71,23 +70,14 @@ class Genetic:
 
   def choose_best(self):
     _ = [self.fitness(chrom) for chrom in self.population]
-    # max_fit = -1
-    # best = 0
-    # for i in range(len(self.population)):
-    #   if fitnesses[i] > max_fit:
-    #     max_fit = fitnesses[i]
-    #     best = i
     return self.best_value, self.best_chromosome
 
-  def solve(self, trace: 'list[int]'=None):
+  def solve(self):
     gen = 0
     while gen != Genetic.MAX_GEN:
       fitnesses = [self.fitness(chrom) for chrom in self.population]
       new_population = []
-      
-      if trace is not None:
-        trace.append(self.best_value)
-      # print(fitnesses[best], bin(self.population[best]))
+
       new_population.append(self.best_chromosome)
 
       for _ in range(0, Genetic.POPULATION_SIZE, 2):
@@ -131,17 +121,8 @@ with open(f"./Tests/INPUT_{test_seq}.txt") as f:
   best_sol = None
   for _ in range(test_num):
     gen = Genetic(W, m, w, v, c)
-    trace = []
-    sol = gen.solve(trace)
+    sol = gen.solve()
     if int(sol[0]) > best_value:
       best_value = int(sol[0])
       best_sol = sol
-    plt.plot(trace)
-  # plt.show()
   write_result(test_seq, *best_sol)
-plt.show()
-  # print(W)
-  # print(m)
-  # print(w)
-  # print(v)
-  # print(c)
